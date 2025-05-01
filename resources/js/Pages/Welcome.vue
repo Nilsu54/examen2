@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
 import axios from 'axios'; // Asegúrate de tener axios instalado
 
 const props = defineProps({
@@ -11,6 +11,10 @@ const props = defineProps({
 });
 
 console.log(props.events);
+
+function deletevent (id){
+    router.delete(route('events.destroy',id))
+}
 
 </script>
 
@@ -51,7 +55,7 @@ console.log(props.events);
                                 >
                                     Editar
                                 </Link>
-                                <button class="text-red-500 hover:underline">Eliminar</button>
+                                <button @click="deletevent(event.id)" class="text-red-500 hover:underline">Eliminar</button>
                             </td>
                         </tr>
                     </tbody>
