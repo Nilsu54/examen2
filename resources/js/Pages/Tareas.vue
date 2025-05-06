@@ -1,7 +1,9 @@
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed  } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import axios from 'axios'; // Asegúrate de tener axios instalado
+
+const search = ref('')
 
 const props = defineProps({
     tasks: {
@@ -12,12 +14,28 @@ const props = defineProps({
 function deletetask (id){
     router.delete(route('task.destroy',id))
 }
+
+const filteredtask = computed(() =>
+  props.tasks.filter(task =>
+    task.title.toLowerCase().includes(search.value.toLowerCase()) ||
+    (task.category && task.category.name &&
+      task.category.name.toLowerCase().includes(search.value.toLowerCase()))
+  )
+);
 </script>
 
 <template>
     <Head title="task" />
     <div class="bg-gray-50 text-black/50  dark:text-white/50">
-        <div class="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
+        <div class="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-black">
+            <div class="search-container">
+  <input 
+    type="text"
+    v-model="search" 
+    placeholder="Buscar por nombre o categoría..." 
+    class="px-4 py-2 border rounded-lg shadow-sm text-black"
+  />
+</div>
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
 
                 <!-- Botón para ir a crear un nuevo evento -->
@@ -40,7 +58,7 @@ function deletetask (id){
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="task in tasks" :key="task.id" class="hover:bg-gray-100">
+                        <tr v-for="task in filteredtask" :key="task.id" class="hover:bg-gray-100">
                             <td class="border border-gray-300 px-4 py-2 text-black">{{ task.title }}</td>
                             <td class="border border-gray-300 px-4 py-2 text-black">{{ task.description }}</td>
                             <td class="border border-gray-300 px-4 py-2 text-black">{{ task.created_at }}</td>
