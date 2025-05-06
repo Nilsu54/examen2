@@ -5,7 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\EventController;
-
+use App\Http\Controllers\TaskController;
 
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
@@ -18,5 +18,7 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('events', EventController::class);
+Route::resource('task', TaskController::class);
+
 
 require __DIR__.'/auth.php';

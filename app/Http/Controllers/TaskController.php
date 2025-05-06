@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\event;
+use App\Models\task;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-class EventController extends Controller
+
+
+class TaskController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $events = Event::all();
+        $task = task::all();
       
-        return Inertia::render('Welcome', [
-            'events' => $events
+        return Inertia::render('Tareas', [
+            'tasks' => $task
         ]);
     }
 
@@ -24,7 +26,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CreateEvent');
+        return Inertia::render('CreateTask');
     }
 
     /**
@@ -32,55 +34,55 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        $event= $request->validate([
+        $task= $request->validate([
             'title' => 'required',
             'description' => 'required',
         ]);
 
-        Event::create($event);
-        return redirect()->route('events.index');
+        task::create($task);
+        return redirect()->route('task.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(event $event)
+    public function show(task $task)
     {
-          return Inertia::render('EditEvent', [
-            'event' => $event, // Pasa el evento a la vista
+        return Inertia::render('ShowTask', [
+            'task' => $task, // Pasa el evento a la vista
         ]);
+    
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-   public function edit(Event $event)
-{
-        return Inertia::render('EditEvent', [
-            'event' => $event, // Pasa el evento a la vista
+    public function edit(task $task)
+    {
+        return Inertia::render('EditTask', [
+            'task' => $task, // Pasa el evento a la vista
         ]);
-        
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, event $event)
+    public function update(Request $request, task $task)
     {
         $validated = $request->validate([
             'title' => 'required',
             'description' => 'required',
         ]);
-        $event->update($validated);
-        return redirect()->route('events.index');
+        $task->update($validated);
+        return redirect()->route('task.index');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(event $event)
+    public function destroy(task $task)
     {
-        $event->delete();
-        return redirect()->route('events.index');
+        $task->delete();
+        return redirect()->route('task.index');
     }
 }
