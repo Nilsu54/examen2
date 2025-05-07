@@ -29,15 +29,24 @@
                         ></textarea>
                     </div>
 
+                    <!-- Campo de categorías -->
+                    <div>
+                        <label for="category" class="block text-sm font-medium">Categoría</label>
+                        <select id="category" v-model="form.categoria_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring-[#FF2D20] bg-gray-100">
+                            <option v-for="categoria in categories" :key="categoria.id" :value="categoria.id">{{ categoria.title }}</option>
+                        </select>
+                    </div>
+
+                    <!-- Campo de imagen -->
                     <div class="mb-4">
-        <label class="block text-gray-700 text-sm font-bold mb-2" for="image">
-          Imagen del Evento
-        </label>
-        <input type="file" id="image" @input="handleImageChange" class="w-full border p-2 rounded" accept="image/*" />
-        <div class="p-2 text-left">
-          <img v-if="previewImage" class="w-20" :src="previewImage" :alt="form.name">
-        </div>
-      </div>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Imagen del Evento</label>
+                        <input type="file" id="image" @input="handleImageChange" class="w-full border p-2 rounded" accept="image/*" />
+                        <div class="p-2 text-left">
+                            <img v-if="previewImage" class="w-20" :src="previewImage" :alt="form.name" />
+                        </div>
+                    </div>
+
+                    <!-- Botón para enviar -->
                     <button
                         type="submit"
                         class="inline-flex justify-center rounded-md border border-transparent bg-[#FF2D20] px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-[#FF2D20]/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF2D20] focus-visible:ring-offset-2"
@@ -50,26 +59,42 @@
     </div>
 </template>
 
+
 <script setup>
+import { ref } from 'vue';
 import { useForm } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
+
 
 const form = useForm({
     title: '',
     description: '',
+    categoria_id: '',  // Se añadió el campo para la categoría
     image: '',
 });
-const handleImageChange = (task) => {
-  const file = task.target.files[0];
-  form.image = file;
 
-  if (file) {
-    previewImage.value = URL.createObjectURL(file);
-  }
+const previewImage = ref(null);
+
+// Función para manejar el cambio de imagen
+const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    form.image = file;
+
+    if (file) {
+        previewImage.value = URL.createObjectURL(file);
+    }
 };
+
+// Función de envío del formulario
 const submit = () => {
     form.post(route('task.store'));
 };
+
+const props = defineProps({
+  categories: Array,
+})
 </script>
+
 
 <style scoped>
 body {

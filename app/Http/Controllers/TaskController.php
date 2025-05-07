@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\task;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,8 +15,8 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $task = task::all();
-      
+        $task = task::with(relations: 'categoria')->get();
+
         return Inertia::render('Tareas', [
             'tasks' => $task
         ]);
@@ -26,7 +27,11 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return Inertia::render('CreateTask');
+        $categories = Categoria::all();
+
+        return Inertia::render('CreateTask',[
+            'categories' => $categories
+        ]);
     }
 
     /**
@@ -38,6 +43,8 @@ class TaskController extends Controller
             'title' => 'required',
             'description' => 'required',
             'image' => 'nullable|image',
+            'categoria_id' => 'required'
+
         ]);
     
         if ($request->hasFile('image')) {
@@ -56,8 +63,8 @@ class TaskController extends Controller
      */
     public function show(task $task)
     {
-        return Inertia::render('ShowTask', [
-            'task' => $task, // Pasa el evento a la vista
+        return Inertia::render('ShowTask',[
+            'task' => $task->load('categoria'),
         ]);
     
     }
@@ -81,6 +88,7 @@ class TaskController extends Controller
             'title' => 'required',
             'description' => 'required',
             'image' => 'nullable|image',
+            'categoria_id' => 'required'
         ]);
     
         if ($request->hasFile('image')) {

@@ -31,32 +31,30 @@ const props = defineProps({
 
   <div class="flex flex-col items-center justify-center min-h-screen bg-gray-100">
     <!-- Imagen del carrusel -->
-    <img
-      :src="images[currentIndex].src"
-      :alt="'Imagen ' + (currentIndex + 1)"
-      class="w-96 h-auto rounded-lg shadow-lg"
-    />
+    <img :src="images[currentIndex].src" :alt="'Imagen ' + (currentIndex + 1)"
+      class="w-96 h-auto rounded-lg shadow-lg" />
 
     <!-- Puntos de navegación del carrusel -->
     <div class="flex space-x-2 mt-4">
-      <span
-        v-for="(img, index) in images"
-        :key="index"
-        @click="goToImage(index)"
-        class="w-3 h-3 rounded-full cursor-pointer transition-all duration-300"
-        :class="{
+      <span v-for="(img, index) in images" :key="index" @click="goToImage(index)"
+        class="w-3 h-3 rounded-full cursor-pointer transition-all duration-300" :class="{
           'bg-gray-800': index === currentIndex,
           'bg-gray-400': index !== currentIndex
-        }"
-      />
+        }" />
     </div>
 
-  <!-- Datos de la tarea -->
-  <div class="task">
-    <h1>{{ task.title }}</h1>
-    <p>{{ task.description }}</p>
+    <!-- Datos de la tarea -->
+    <div class="task">
+      <h1>{{ task.title }}</h1>
+      <p>{{ task.description }}</p>
+      <p>{{ task.categoria_id }}</p>
+      <td class="px-4 py-2">
+        {{ task.categoria.title }}
+      </td>
+
+
+    </div>
   </div>
-</div>
 
 </template>
 
@@ -67,6 +65,7 @@ const props = defineProps({
   margin: auto;
   font-family: sans-serif;
 }
+
 h1 {
   color: #333;
 }

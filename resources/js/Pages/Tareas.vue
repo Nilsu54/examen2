@@ -93,6 +93,7 @@ const filteredtask = computed(() =>
                             <th class="border border-gray-300 px-4 py-2">Título</th>
                             <th class="border border-gray-300 px-4 py-2">Descripción</th>
                             <th class="border border-gray-300 px-4 py-2">imagen</th>
+                            <th class="border border-gray-300 px-4 py-2">Categoria</th>
                             <th class="border border-gray-300 px-4 py-2">Fecha de Creación</th>
                             <th class="border border-gray-300 px-4 py-2">Acciones</th>
                         </tr>
@@ -103,6 +104,7 @@ const filteredtask = computed(() =>
                             <td class="border border-gray-300 px-4 py-2 text-black">{{ task.description }}</td>
                             <td class="border border-gray-300 px-4 py-2 text-black"> <img class="w-20"
                                     :src="`/storage/${task.image}`" :alt="task.name"></td>
+                                    <td class="border border-gray-300 px-4 py-2 text-black">{{ task.categoria_id }}</td>
                             <td class="border border-gray-300 px-4 py-2 text-black">{{ task.created_at }}</td>
                             <td class="border border-gray-300 px-4 py-2">
                                 <Link :href="route('task.show', task.id)" class="text-green-500 hover:underline">
