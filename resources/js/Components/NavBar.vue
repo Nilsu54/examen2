@@ -4,7 +4,7 @@
   </script>
 <template>
     <nav class="bg-white  shadow p-4 flex sticky justify-between items-center">
-      <h1 class="text-xl font-bold text-gray-700">Mi Aplicación</h1>
+      <h1 class="text-xl font-bold text-gray-700">Nil</h1>
       <div class="space-x-4">
         <Link
           href="/events"

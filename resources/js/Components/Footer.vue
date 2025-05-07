@@ -13,7 +13,7 @@
     bottom: 0;
     width: 100%;
     left: 0;
-    background-color: #333;
+    background-color: #252850;
     color: white;
     padding: 10px;
     text-align: center;

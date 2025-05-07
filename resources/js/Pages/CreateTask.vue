@@ -44,7 +44,7 @@
 
                     <!-- Botón para enviar -->
                     <button type="submit"
-                        class="inline-flex justify-center rounded-md border border-transparent bg-[#252850] px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-[#FF2D20]/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF2D20] focus-visible:ring-offset-2">
+                        class="inline-flex justify-center rounded-md border border-transparent bg-[#252850] px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-[#252850]/80 ">
                         Añadir Tarea
                     </button>
                 </form>
@@ -111,9 +111,7 @@ textarea {
 
 input:focus,
 textarea:focus {
-    border-color: #FF2D20;
-    /* Color de borde al enfocar */
-    box-shadow: 0 0 0 1px rgba(255, 45, 32, 0.5);
-    /* Sombra al enfocar */
+    border-color: #252850;
+
 }
 </style>
