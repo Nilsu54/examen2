@@ -3,6 +3,8 @@
 import { ref, computed } from 'vue'; // ref y computed son funciones de Vue para manejar variables reactivas y valores calculados
 import { Head, Link, router } from '@inertiajs/vue3'; // Head cambia el título de la página, Link se usa para enlaces, router se usa para navegación
 import Navbar from '@/Components/NavBar.vue'; // Importa el componente de la barra de navegación
+import Footer from '@/Components/Footer.vue';
+
 
 // Definición de una variable reactiva para el índice de la imagen que se está mostrando
 const currentIndex = ref(0);
@@ -116,6 +118,8 @@ const filteredtask = computed(() =>
             </div>
         </div>
     </div>
+    <Footer />
+
 </template>
 
 <style scoped>

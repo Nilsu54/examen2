@@ -3,7 +3,7 @@
 
   </script>
 <template>
-    <nav class="bg-white shadow p-4 flex justify-between items-center">
+    <nav class="bg-white  shadow p-4 flex sticky justify-between items-center">
       <h1 class="text-xl font-bold text-gray-700">Mi Aplicación</h1>
       <div class="space-x-4">
         <Link
@@ -23,4 +23,10 @@
   </template>
   
   
-  
+  <style scoped>
+nav {
+  position: sticky; /* Mantiene el nav fijo mientras haces scroll */
+  top: 0; /* Hace que el nav se quede pegado en la parte superior */
+  z-index: 10; /* Asegura que el nav quede encima de otros elementos */
+}
+</style>
