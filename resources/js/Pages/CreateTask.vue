@@ -34,7 +34,7 @@
 
                     <!-- Campo de imagen -->
                     <div class="mb-4">
-                        <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Imagen del Evento</label>
+                        <label class="block text-gray-700 text-sm font-bold mb-2" for="image">Imagen de la Tarea</label>
                         <input type="file" id="image" @input="handleImageChange" class="w-full border p-2 rounded"
                             accept="image/*" />
                         <div class="p-2 text-left">
@@ -70,8 +70,8 @@ const form = useForm({
 const previewImage = ref(null);
 
 // Función para manejar el cambio de imagen
-const handleImageChange = (event) => {
-    const file = event.target.files[0];
+const handleImageChange = (task) => {
+    const file = task.target.files[0];
     form.image = file;
 
     if (file) {

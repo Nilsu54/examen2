@@ -12,24 +12,22 @@ class CategoriaSeeder extends Seeder
      */
     public function run(): void
     {
+
+
         Categoria::create([
-            'title' => 'Museo',
+            'title' => 'prioridad baja',
         ]);
 
         Categoria::create([
-            'title' => 'Parque',
+            'title' => 'prioridad media',
         ]);
 
         Categoria::create([
-            'title' => 'Castillo',
+            'title' => 'Urgente',
         ]);
 
         Categoria::create([
-            'title' => 'Iglesia',
-        ]);
-
-        Categoria::create([
-            'title' => 'Biblioteca',
+            'title' => 'Super Urgente',
         ]);
 
     }
