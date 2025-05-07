@@ -8,13 +8,13 @@
       <div class="space-x-4">
         <Link
           href="/events"
-          class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 transition"
+          class="px-4 py-2 bg-[#252850] text-white rounded hover:bg-[#252850]-500 transition"
         >
           Ir a Events
         </Link>
         <Link
           href="/task"
-          class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 transition"
+          class="px-4 py-2 bg-[#252850] text-white rounded hover:bg-[#252850]-500 transition"
         >
           Ir a Task
         </Link>
