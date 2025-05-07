@@ -7,6 +7,8 @@ import { Head, Link, router } from '@inertiajs/vue3'; // Head: título HTML, Lin
 import Navbar from '@/Components/NavBar.vue';
 import Footer from '@/Components/Footer.vue';
 
+//contador de tasks
+const totalTasks = computed(() => props.tasks.length);
 
 const isCarouselVisible = ref(true); // Controlar la visibilidad del carrusel
 
@@ -155,6 +157,9 @@ function deleteTask(id) {
                             </tr>
                         </tbody>
                     </table>
+                    <!-- contador de tareas -->
+                    <p class="text-lg text-gray-700 mb-2">Total de tareas: {{ totalTasks }}</p>
+
                 </div>
             </div>
         </div>
