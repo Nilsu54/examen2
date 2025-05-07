@@ -9,7 +9,7 @@ const currentIndex = ref(0)
 // Lista de imágenes estáticas (rutas locales)
 const images = [
   { src: '/storage/task/2opYrKsSqnhhPeRaFPTZXhKn7Icl8bDbMDA8r8H9.png' },
-  { src: '/storage/task/5cJXDG8Nm7arRRKxPwA3u96aQxY1VvkMFMjfP4qn.jpg' }
+  { src: '/storage/task/lYOq82TRyY51PV9EVmPHPGVFRd5uZW0ZvzKwt4yF.jpg' }
 ]
 
 // Cambia a la imagen según el índice elegido
@@ -42,18 +42,27 @@ const props = defineProps({
           'bg-gray-400': index !== currentIndex
         }" />
     </div>
+            <!-- image -->
 
-    <!-- Datos de la tarea -->
-    <div class="task">
-      <h1>{{ task.title }}</h1>
-      <p>{{ task.description }}</p>
-      <p>{{ task.categoria_id }}</p>
-      <td class="px-4 py-2">
-        {{ task.categoria.title }}
-      </td>
+    <img :src="`/storage/${task.image}`" alt="Imagen de la tarea" class="mt-4  rounded-lg shadow-md">
+        <!-- Datos de la tarea -->
+    <div class="task bg-white p-6 rounded-lg shadow-lg max-w-xl mx-auto mt-4">
+  <!-- Título de la tarea -->
+  <h1 class="text-3xl font-semibold text-[#252850] mb-4">Titulo:{{ task.title }}</h1>
 
+  <!-- Descripción de la tarea -->
+  <p class="text-lg text-gray-700 mb-4">Descripcion:{{ task.description }}</p>
 
-    </div>
+  <!-- Categoría ID (si es necesario mostrarla) -->
+  <p class="text-sm text-gray-500 mb-2">Categoría ID: {{ task.categoria_id }}</p>
+
+  <!-- Título de la categoría -->
+  <div class="flex justify-between items-center">
+    <span class="text-sm font-medium text-gray-500">Categoría:</span>
+    <span class="text-sm text-[#252850]">{{ task.categoria.title }}</span>
+  </div>
+</div>
+
   </div>
 
 </template>

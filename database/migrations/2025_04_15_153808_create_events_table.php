@@ -11,6 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
+        //si pones table simplemente editas una existente
         Schema::create('events', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
