@@ -1,7 +1,7 @@
 <script setup>
-import { ref, onMounted } from 'vue';
 import { Head, Link, router } from '@inertiajs/vue3';
 import axios from 'axios'; // Asegúrate de tener axios instalado
+import Navbar from '@/Components/NavBar.vue';
 
 const props = defineProps({
     events: {
@@ -20,6 +20,8 @@ function deletevent (id){
 
 <template>
     <Head title="Welcome" />
+    <Navbar />
+
     <div class="bg-gray-50 text-black/50  dark:text-white/50">
         <div class="relative flex min-h-screen flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
             <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">

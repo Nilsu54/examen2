@@ -34,14 +34,22 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task= $request->validate([
+        $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'image' => 'nullable|image',
         ]);
-
-        task::create($task);
+    
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('task', 'public');
+            $data['image'] = $imagePath; // Aquí guardas el hashname
+        }
+    
+        Task::create($data); // Asegúrate de tener el modelo importado
+    
         return redirect()->route('task.index');
     }
+    
 
     /**
      * Display the specified resource.
@@ -69,11 +77,19 @@ class TaskController extends Controller
      */
     public function update(Request $request, task $task)
     {
-        $validated = $request->validate([
+        $data = $request->validate([
             'title' => 'required',
             'description' => 'required',
+            'image' => 'nullable|image',
         ]);
-        $task->update($validated);
+    
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('task', 'public');
+            $data['image'] = $imagePath; // Aquí guardas el hashname
+        }
+    
+        $task->update($data); // Actualiza la tarea con los nuevos datos
+    
         return redirect()->route('task.index');
     }
 

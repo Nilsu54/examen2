@@ -28,6 +28,16 @@
                             class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-[#FF2D20] focus:ring-[#FF2D20] bg-gray-100"
                         ></textarea>
                     </div>
+
+                    <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="image">
+          Imagen del Evento
+        </label>
+        <input type="file" id="image" @input="handleImageChange" class="w-full border p-2 rounded" accept="image/*" />
+        <div class="p-2 text-left">
+          <img v-if="previewImage" class="w-20" :src="previewImage" :alt="form.name">
+        </div>
+      </div>
                     <button
                         type="submit"
                         class="inline-flex justify-center rounded-md border border-transparent bg-[#FF2D20] px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-[#FF2D20]/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FF2D20] focus-visible:ring-offset-2"
@@ -46,8 +56,16 @@ import { useForm } from '@inertiajs/vue3';
 const form = useForm({
     title: '',
     description: '',
+    image: '',
 });
+const handleImageChange = (task) => {
+  const file = task.target.files[0];
+  form.image = file;
 
+  if (file) {
+    previewImage.value = URL.createObjectURL(file);
+  }
+};
 const submit = () => {
     form.post(route('task.store'));
 };
