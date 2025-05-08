@@ -370,3 +370,185 @@ const submit = () => {
     </form>
   </div>
 </template> -->
+
+Editar
+
+<!-- 🛠️ 1. Rutas (web.php o RouteServiceProvider si usas resource)
+Si ya usaste:
+
+bash
+Copiar
+Editar
+php artisan make:model Task -mcr
+Y en tu routes/web.php usaste:
+
+php
+Copiar
+Editar
+Route::resource('task', TaskController::class);
+Entonces ya tienes las rutas edit y update.
+
+🎯 2. Controlador (TaskController.php)
+✏️ Método edit:
+php
+Copiar
+Editar
+public function edit(Task $task)
+{
+    $categorias = Categoria::all();
+
+    return Inertia::render('Task/Edit', [
+        'task' => $task,
+        'categorias' => $categorias
+    ]);
+}
+💾 Método update:
+php
+Copiar
+Editar
+public function update(Request $request, Task $task)
+{
+    $request->validate([
+        'title' => 'required',
+        'description' => 'required',
+        'price' => 'required|numeric',
+        'categoria_id' => 'required|exists:categorias,id'
+    ]);
+
+    $task->update($request->all());
+
+    return redirect()->route('task.index');
+}
+🎨 3. Vista: resources/js/Pages/Task/Edit.vue
+vue
+Copiar
+Editar
+<script setup>
+import { useForm, Link } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  task: Object,
+  categorias: Array
+});
+
+const form = useForm({
+  title: props.task.title,
+  description: props.task.description,
+  price: props.task.price,
+  categoria_id: props.task.categoria_id
+});
+
+const submit = () => {
+  form.put(route('task.update', props.task.id));
+};
+</script>
+
+<template>
+  <div class="p-6 max-w-xl mx-auto">
+    <h1 class="text-xl font-bold mb-4">Editar Tarea</h1>
+
+    <form @submit.prevent="submit" class="space-y-4">
+      <div>
+        <label class="block">Título:</label>
+        <input v-model="form.title" type="text" class="w-full border p-2 rounded" required />
+      </div>
+
+      <div>
+        <label class="block">Descripción:</label>
+        <textarea v-model="form.description" class="w-full border p-2 rounded" required></textarea>
+      </div>
+
+      <div>
+        <label class="block">Precio (€):</label>
+        <input v-model="form.price" type="number" step="0.01" class="w-full border p-2 rounded" required />
+      </div>
+
+      <div>
+        <label class="block">Categoría:</label>
+        <select v-model="form.categoria_id" class="w-full border p-2 rounded" required>
+          <option value="" disabled>Selecciona una categoría</option>
+          <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">
+            {{ categoria.title }}
+          </option>
+        </select>
+      </div>
+
+      <div class="flex justify-between">
+        <Link :href="route('task.index')" class="bg-gray-300 px-4 py-2 rounded">Cancelar</Link>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Actualizar</button>
+      </div>
+    </form>
+  </div>
+</template> -->
+
+eliminar y ver
+
+<!-- 🧨 1. Eliminar (destroy)
+🔧 Controlador (TaskController.php)
+php
+Copiar
+Editar
+public function destroy(Task $task)
+{
+    $task->delete();
+    return redirect()->route('task.index');
+}
+📄 Vista (por ejemplo en Index.vue)
+Dentro de la tabla de tareas o donde tengas el listado:
+
+vue
+Copiar
+Editar
+<button @click="deleteTask(task.id)" class="text-red-600 hover:underline">
+  Eliminar
+</button>
+🧠 Script en Index.vue
+vue
+Copiar
+Editar
+<script setup>
+import { router } from '@inertiajs/vue3';
+
+function deleteTask(id) {
+  if (confirm('¿Estás seguro de que deseas eliminar esta tarea?')) {
+    router.delete(route('task.destroy', id));
+  }
+}
+</script>
+👁️ 2. Vista Individual (show)
+🔧 Controlador (TaskController.php)
+php
+Copiar
+Editar
+public function show(Task $task)
+{
+    return Inertia::render('Task/Show', [
+        'task' => $task,
+    ]);
+}
+🖼️ Componente resources/js/Pages/Task/Show.vue
+vue
+Copiar
+Editar
+<script setup>
+import { defineProps, Link } from 'vue';
+
+const props = defineProps({
+  task: Object
+});
+</script>
+
+<template>
+  <div class="p-6 max-w-3xl mx-auto">
+    <h1 class="text-2xl font-bold mb-4">{{ task.title }}</h1>
+
+    <p class="mb-2"><strong>Descripción:</strong> {{ task.description }}</p>
+    <p class="mb-2"><strong>Precio:</strong> {{ task.price }} €</p>
+    <p class="mb-2"><strong>Categoría:</strong> {{ task.categoria?.title ?? 'Sin categoría' }}</p>
+
+    <Link :href="route('task.index')" class="mt-4 inline-block text-blue-600 underline">
+      ← Volver al listado
+    </Link>
+  </div>
+</template> -->
