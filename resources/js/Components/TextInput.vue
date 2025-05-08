@@ -192,3 +192,181 @@ Formulario con useForm(), métodos post o put
 Mostrar imágenes, inputs con v-model
 
 Eliminar con router.delete -->
+
+
+
+Create
+
+<!-- 🧰 Paso 1: Crear el modelo y recursos de Tarea
+bash
+Copiar
+Editar
+php artisan make:model Task -mcr
+🧱 Paso 2: Migración de tareas
+Edita la migración generada xxxx_xx_xx_create_tasks_table.php así:
+
+php
+Copiar
+Editar
+Schema::create('tasks', function (Blueprint $table) {
+    $table->id();
+    $table->string('title');
+    $table->text('description');
+    $table->decimal('price', 8, 2);
+    $table->foreignId('categoria_id')->constrained()->onDelete('cascade');
+    $table->timestamps();
+});
+Después:
+
+bash
+Copiar
+Editar
+php artisan migrate
+🔁 Paso 3: Relaciones en el modelo
+app/Models/Task.php
+
+php
+Copiar
+Editar
+public function categoria()
+{
+    return $this->belongsTo(Categoria::class);
+}
+📋 Paso 4: Mostrar en tabla (index)
+Controlador: TaskController.php
+php
+Copiar
+Editar
+public function index()
+{
+    $tasks = Task::with('categoria')->get();
+    return Inertia::render('Task/Index', [
+        'tasks' => $tasks
+    ]);
+}
+Vista: resources/js/Pages/Task/Index.vue
+vue
+Copiar
+Editar
+<script setup>
+import { defineProps } from 'vue';
+import { Link } from '@inertiajs/vue3';
+
+const props = defineProps({
+  tasks: Array
+});
+</script>
+
+<template>
+  <div class="p-6">
+    <h1 class="text-2xl font-bold mb-4">Lista de Tareas</h1>
+
+    <table class="w-full border">
+      <thead>
+        <tr class="bg-gray-100">
+          <th class="p-2">Título</th>
+          <th class="p-2">Descripción</th>
+          <th class="p-2">Precio</th>
+          <th class="p-2">Categoría</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="task in tasks" :key="task.id">
+          <td class="p-2">{{ task.title }}</td>
+          <td class="p-2">{{ task.description }}</td>
+          <td class="p-2">€{{ task.price }}</td>
+          <td class="p-2">{{ task.categoria?.title ?? 'Sin categoría' }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <Link :href="route('task.create')" class="mt-4 inline-block bg-blue-600 text-white px-4 py-2 rounded">
+      Crear nueva tarea
+    </Link>
+  </div>
+</template>
+📝 Paso 5: Crear nueva tarea (create + store)
+Controlador:
+php
+Copiar
+Editar
+public function create()
+{
+    $categorias = Categoria::all();
+    return Inertia::render('Task/Create', ['categorias' => $categorias]);
+}
+
+public function store(Request $request)
+{
+    $request->validate([
+        'title' => 'required',
+        'description' => 'required',
+        'price' => 'required|numeric',
+        'categoria_id' => 'required|exists:categorias,id'
+    ]);
+
+    Task::create($request->all());
+
+    return redirect()->route('task.index');
+}
+Vista: resources/js/Pages/Task/Create.vue
+vue
+Copiar
+Editar
+<script setup>
+import { useForm, Link } from '@inertiajs/vue3';
+import { defineProps } from 'vue';
+
+const props = defineProps({
+  categorias: Array
+});
+
+const form = useForm({
+  title: '',
+  description: '',
+  price: '',
+  categoria_id: ''
+});
+
+const submit = () => {
+  form.post(route('task.store'));
+};
+</script>
+
+<template>
+  <div class="p-6 max-w-xl mx-auto">
+    <h1 class="text-xl font-bold mb-4">Crear Nueva Tarea</h1>
+
+    <form @submit.prevent="submit" class="space-y-4">
+      <div>
+        <label class="block">Título:</label>
+        <input v-model="form.title" type="text" class="w-full border p-2 rounded" required />
+      </div>
+
+      <div>
+        <label class="block">Descripción:</label>
+        <textarea v-model="form.description" class="w-full border p-2 rounded" required></textarea>
+      </div>
+
+      <div>
+        <label class="block">Precio (€):</label>
+        <input v-model="form.price" type="number" step="0.01" class="w-full border p-2 rounded" required />
+      </div>
+
+      <div>
+        <label class="block">Categoría:</label>
+        <select v-model="form.categoria_id" class="w-full border p-2 rounded" required>
+          <option value="" disabled>Selecciona una categoría</option>
+          <option v-for="categoria in categorias" :key="categoria.id" :value="categoria.id">
+            {{ categoria.title }}
+          </option>
+        </select>
+      </div>
+
+      <div class="flex justify-between">
+        <Link :href="route('task.index')" class="bg-gray-300 px-4 py-2 rounded">Cancelar</Link>
+        <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded">Guardar</button>
+      </div>
+    </form>
+  </div>
+</template> -->
